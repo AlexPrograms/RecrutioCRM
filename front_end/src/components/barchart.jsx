@@ -2,15 +2,16 @@ import { ResponsiveBar } from '@nivo/bar';
 import { useTheme } from '@mui/material';
 import { tokens } from "../theme";
 import { mockBarData as data } from '../Data/mockData';
+// Accept customData prop for dashboard
 
 
-const BarChart = ({ isDashboard = false }) => {
+const BarChart = ({ isDashboard = false, customData }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
     return(
         <ResponsiveBar
-        data={data}
+        data={customData || data}
         theme={{
             axis: {
                 domain: {
@@ -40,7 +41,14 @@ const BarChart = ({ isDashboard = false }) => {
             },
            
         }}
-        keys={[
+        keys={customData ? [
+            'Barista',
+            'Cleaner',
+            'Welder',
+            'Electrician',
+            'Physical Worker',
+            'Driver',
+        ] : [
             'hot dog',
             'burger',
             'sandwich',
@@ -48,7 +56,7 @@ const BarChart = ({ isDashboard = false }) => {
             'fries',
             'donut'
         ]}
-        indexBy="country"
+        indexBy={customData ? "month" : "country"}
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
         valueScale={{ type: 'linear' }}

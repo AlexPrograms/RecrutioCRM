@@ -1,12 +1,13 @@
 import React from 'react';
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import { mockTransactions } from "../../Data/mockData";
+// Custom dashboard data for charts and table
+import { hiredCandidatesLineData, candidatesPerMonthBarData, recentCandidates } from "../../Data/dashboardCustomData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import TrafficIcon from "@mui/icons-material/Traffic";
+import GroupIcon from "@mui/icons-material/Group";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
+import FolderOpenIcon from "@mui/icons-material/FolderOpen";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import Header from "../../components/header";
 import LineChart from "../../components/linechart";
 import GeographyChart from "../../components/geographychart";
@@ -51,17 +52,18 @@ const Dashboard = () => {
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
+          borderRadius="20px"
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
           <StatBox
             title="12,361"
-            subtitle="Emails Sent"
+            subtitle="Number of Candidates"
             progress="0.75"
             increase="+14%"
             icon={
-              <EmailIcon
+              <GroupIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -70,17 +72,18 @@ const Dashboard = () => {
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
+          borderRadius="20px"
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
           <StatBox
             title="431,225"
-            subtitle="Sales Obtained"
+            subtitle="Open Positions"
             progress="0.50"
             increase="+21%"
             icon={
-              <PointOfSaleIcon
+              <WorkOutlineIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -89,17 +92,18 @@ const Dashboard = () => {
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
+          borderRadius="20px"
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
           <StatBox
             title="32,441"
-            subtitle="New Clients"
+            subtitle="Number of Projects"
             progress="0.30"
             increase="+5%"
             icon={
-              <PersonAddIcon
+              <FolderOpenIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -108,17 +112,18 @@ const Dashboard = () => {
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
+          borderRadius="20px"
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
           <StatBox
             title="1,325,134"
-            subtitle="Traffic Received"
+            subtitle="Fill Rate"
             progress="0.80"
             increase="+43%"
             icon={
-              <TrafficIcon
+              <TrendingUpIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -130,6 +135,7 @@ const Dashboard = () => {
           gridColumn="span 8"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
+          borderRadius="20px"
         >
           <Box
             mt="25px"
@@ -144,14 +150,14 @@ const Dashboard = () => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                Revenue Generated
+                Number of Hired Candidates
               </Typography>
               <Typography
                 variant="h3"
                 fontWeight="bold"
                 color={colors.greenAccent[500]}
               >
-                $59,342.32
+                123
               </Typography>
             </Box>
             <Box>
@@ -163,13 +169,14 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box height="250px" m="-20px 0 0 0">
-            <LineChart isDashboard={true} />
+            <LineChart isDashboard={true} customData={hiredCandidatesLineData} />
           </Box>
         </Box>
         <Box
           gridColumn="span 4"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
+          borderRadius="20px"
           overflow="auto"
         >
           <Box
@@ -181,12 +188,12 @@ const Dashboard = () => {
             p="15px"
           >
             <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Recent Transactions
+              Recent Candidates
             </Typography>
           </Box>
-          {mockTransactions.map((transaction, i) => (
+          {recentCandidates.map((candidate, i) => (
             <Box
-              key={`${transaction.txId}-${i}`}
+              key={`${candidate.txId}-${i}`}
               display="flex"
               justifyContent="space-between"
               alignItems="center"
@@ -199,19 +206,19 @@ const Dashboard = () => {
                   variant="h5"
                   fontWeight="600"
                 >
-                  {transaction.txId}
+                  {candidate.txId}
                 </Typography>
                 <Typography color={colors.grey[100]}>
-                  {transaction.user}
+                  {candidate.user}
                 </Typography>
               </Box>
-              <Box color={colors.grey[100]}>{transaction.date}</Box>
+              <Box color={colors.grey[100]}>{candidate.date}</Box>
               <Box
                 backgroundColor={colors.greenAccent[500]}
                 p="5px 10px"
                 borderRadius="4px"
               >
-                ${transaction.cost}
+                {candidate.phone}
               </Box>
             </Box>
           ))}
@@ -222,10 +229,11 @@ const Dashboard = () => {
           gridColumn="span 4"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
+          borderRadius="20px"
           p="30px"
         >
           <Typography variant="h5" fontWeight="600">
-            Campaign
+            Profit
           </Typography>
           <Box
             display="flex"
@@ -248,22 +256,24 @@ const Dashboard = () => {
           gridColumn="span 4"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
+          borderRadius="20px"
         >
           <Typography
             variant="h5"
             fontWeight="600"
             sx={{ padding: "30px 30px 0 30px" }}
           >
-            Sales Quantity
+            Number of Candidates Each Month
           </Typography>
           <Box height="250px" mt="-20px">
-            <BarChart isDashboard={true} />
+            <BarChart isDashboard={true} customData={candidatesPerMonthBarData} />
           </Box>
         </Box>
         <Box
           gridColumn="span 4"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
+          borderRadius="20px"
           padding="30px"
         >
           <Typography
@@ -271,7 +281,7 @@ const Dashboard = () => {
             fontWeight="600"
             sx={{ marginBottom: "15px" }}
           >
-            Geography Based Traffic
+            Projects Locations
           </Typography>
           <Box height="200px">
             <GeographyChart isDashboard={true} />

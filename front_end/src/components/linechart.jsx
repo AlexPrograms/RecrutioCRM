@@ -3,14 +3,17 @@ import { useTheme } from '@mui/material';
 import { tokens } from "../theme";
 import { mockLineData as data } from '../Data/mockData';
 
-const LineChart = ({isDashboard = false}) => {
+// Accept customData prop for dashboard
+
+
+const LineChart = ({isDashboard = false, customData}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
 
     return (
         <ResponsiveLine
-        data={data}
+        data={customData || data}
         theme={{
             axis: {
                 domain: {
