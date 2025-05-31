@@ -1,0 +1,23 @@
+# Core Django dependencies
+Django>=5.2.1
+
+# Django REST Framework
+ djangorestframework
+
+# CORS headers for API
+ django-cors-headers
+
+django-environ
+
+# Project-specific dependencies
+pandas
+openai
+psycopg
+python-dotenv
+timescale-vector
+instructor
+anthropic
+pydantic
+
+# Optional: PostgreSQL driver (if using PostgreSQL)
+psycopg2-binary
