@@ -1,5 +1,8 @@
 from rest_framework import serializers
-from .models import *
+from .models import Tag, CandidateDocument, CandidateTag, Candidate, Company, EmployeeDocument, Employee, Shift, JobType, RecruiterType, RecruiterCountry, RecruiterPerformance, ApplicationStatusChange, HousingStatus, Status, CandidateApplication
+from authentication_folder.models import User, Role
+from recruiterApp.models import Recruiter
+from projectsApp.models import Project, Vacancy
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from core.models import Status, HousingStatus, JobType, Shift, RecruiterType, Company, Role, User, Tag
+from core.models import Status, HousingStatus, JobType, Shift, RecruiterType, Company, Tag
+from authentication_folder.models import User, Role
 
 class Command(BaseCommand):
     help = 'Seeds the database with initial data.'

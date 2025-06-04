@@ -1,5 +1,8 @@
 from django.contrib import admin
 from .models import *
+from authentication_folder.models import User, Role
+from recruiterApp.models import Recruiter
+from projectsApp.models import Project, Vacancy
 
 class CandidateDocumentInline(admin.TabularInline):
     model = CandidateDocument

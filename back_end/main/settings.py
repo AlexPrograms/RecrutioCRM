@@ -29,7 +29,7 @@ environ.Env.read_env(BASE_DIR / '.env')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-!%yzg68pi3+d!vwbheb23ky+(u)tu7c38%7+ic618j00!r7mw%'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: don't run with debug turned on in production! :)
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']  # Allow all hosts for development
@@ -46,7 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'core',
+    'Apps.core',
+    'Apps.authentication_folder',
+    'Apps.projectsApp',
+    'Apps.recruiterApp',
 ]
 
 MIDDLEWARE = [
@@ -132,8 +135,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS settings
+# CORS settings (змінити на список)
 CORS_ALLOW_ALL_ORIGINS = True
 
 # Custom user model
-AUTH_USER_MODEL = 'core.User'
+AUTH_USER_MODEL = 'authentication_folder.User'

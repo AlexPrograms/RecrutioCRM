@@ -2,6 +2,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import NotAuthenticated
 from .models import *
+from authentication_folder.models import User, Role
 from .serializers import *
 
 class CompanyScopedViewSetMixin:
