@@ -3,8 +3,6 @@ import { useTheme } from '@mui/material';
 import { tokens } from "../theme";
 import { mockLineData as data } from '../Data/mockData';
 
-// Accept customData prop for dashboard
-
 
 const LineChart = ({isDashboard = false, customData}) => {
     const theme = useTheme();

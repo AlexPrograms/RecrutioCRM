@@ -19,13 +19,6 @@ const Team = () => {
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
       field: "phone",
       headerName: "Phone Number",
       flex: 1,
@@ -37,7 +30,7 @@ const Team = () => {
     },
     {
       field: "accessLevel",
-      headerName: "Access Level",
+      headerName: "Role",
       flex: 1,
       renderCell: ({ row: { access } }) => {
         return (
@@ -66,11 +59,19 @@ const Team = () => {
         );
       },
     },
+    {
+      field: "additionalInfo",
+      headerName: "Additional Info",
+      flex: 1,
+      renderCell: ({ row }) => (
+        <Typography color={colors.grey[100]}>-</Typography>
+      ),
+    },
   ];
 
   return (
     <Box m="20px">
-      <Header title="TEAM" subtitle="Managing the Team Members" />
+      <Header title="Office Employees" subtitle="Manage your office employees" />
       <Box
         m="40px 0 0 0"
         height="75vh"
