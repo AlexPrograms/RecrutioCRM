@@ -6,12 +6,13 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
+import WorkIcon from "@mui/icons-material/Work";
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
+import BuildIcon from "@mui/icons-material/Build";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+// Import additional icons as needed
 
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -135,23 +136,30 @@ const Sidebar = () => {
               Data
             </Typography>
             <Item
-              title="Manage Team"
-              to="/team"
+              title="Employees"
+              to="/employees"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Contacts Information"
-              to="/contacts"
-              icon={<ContactsOutlinedIcon />}
+              title="Candidates"
+              to="/candidates"
+              icon={<PersonSearchIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Invoices Balances"
-              to="/invoices"
-              icon={<ReceiptOutlinedIcon />}
+              title="Projects"
+              to="/projects"
+              icon={<BusinessCenterIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Vacancies"
+              to="/vacancies"
+              icon={<WorkIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -161,15 +169,16 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Pages
+              Tools
             </Typography>
-            <Item
+            {/* Profile Form is hidden but code is kept */}
+            {/* <Item
               title="Profile Form"
               to="/form"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
             <Item
               title="Calendar"
               to="/calendar"
@@ -178,9 +187,9 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="FAQ Page"
+              title="FAQ"
               to="/faq"
-              icon={<HelpOutlineOutlinedIcon />}
+              icon={<BuildIcon />}
               selected={selected}
               setSelected={setSelected}
             />

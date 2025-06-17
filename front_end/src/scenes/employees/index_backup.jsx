@@ -83,15 +83,22 @@ const Employees = () => {
             setError('');
             console.log('🔄 Fetching employees...');
             const response = await employeesApi.getAll();
-            console.log('✅ Employees response:', response);
+            console.log('✅ Employees data received:', response.data);
+            setEmployees(response.data || []);
             
-            // Handle paginated response
-            const employeeData = response.data?.results || response.data || [];
-            console.log('📊 Employee data:', employeeData);
-            setEmployees(Array.isArray(employeeData) ? employeeData : []);
+            if (response.data && response.data.length > 0) {
+                console.log('📊 Employee sample:', response.data[0]);
+            }
         } catch (err) {
-            console.error('❌ Error fetching employees:', err);
-            setError(`Failed to fetch employees: ${err.message || 'Unknown error'}`);
+            const errorMessage = "Failed to fetch employees. Please check your connection and authentication.";
+            setError(errorMessage);
+            console.error('❌ Employees fetch error:', err);
+            console.error('Error details:', {
+                message: err.message,
+                status: err.response?.status,
+                statusText: err.response?.statusText,
+                data: err.response?.data
+            });
         } finally {
             setLoading(false);
         }
@@ -100,23 +107,22 @@ const Employees = () => {
     const fetchDropdownData = useCallback(async () => {
         try {
             console.log('🔄 Fetching dropdown data...');
-            const [candidatesRes, projectsRes, vacanciesRes] = await Promise.all([
+            const [cands, projs, vacs] = await Promise.all([
                 candidatesApi.getAll(),
                 projectsApi.getAll(),
                 vacanciesApi.getAll()
             ]);
-            
-            console.log('✅ API responses:', { candidatesRes, projectsRes, vacanciesRes });
-            
-            // Handle paginated responses for all APIs
-            setCandidates(candidatesRes.data?.results || candidatesRes.data || []);
-            setProjects(projectsRes.data?.results || projectsRes.data || []);
-            setVacancies(vacanciesRes.data?.results || vacanciesRes.data || []);
-            
-            console.log('✅ Dropdown data loaded successfully');
+            setCandidates(cands.data || []);
+            setProjects(projs.data || []);
+            setVacancies(vacs.data || []);
+            console.log('✅ Dropdown data loaded:', {
+                candidates: cands.data?.length || 0,
+                projects: projs.data?.length || 0,
+                vacancies: vacs.data?.length || 0
+            });
         } catch (err) {
-            console.error('❌ Error fetching dropdown data:', err);
-            setError(`Failed to load form data: ${err.message || 'Unknown error'}`);
+            setError("Failed to fetch dropdown data. Some form options may not be available.");
+            console.error('❌ Dropdown data fetch error:', err);
         }
     }, []);
 
@@ -140,32 +146,25 @@ const Employees = () => {
         validationSchema: employeeSchema,
         onSubmit: async (values, { resetForm, setSubmitting }) => {
             setError('');
-            
-            // Get company info from auth token or use a default
-            const company = 1; // TODO: Extract from user context/auth token
-            
             const payload = {
                 candidate: values.candidate_id,
                 project: values.project_id,
                 vacancy: values.vacancy_id,
-                company: company,
                 start_date: values.start_date ? dayjs(values.start_date).format('YYYY-MM-DD') : null,
                 planned_end_date: values.planned_end_date ? dayjs(values.planned_end_date).format('YYYY-MM-DD') : null,
                 is_registered_zus: values.is_registered_zus,
                 zus_registration_date: values.zus_registration_date ? dayjs(values.zus_registration_date).format('YYYY-MM-DD') : null,
-                housing_details: values.housing_details || '',
-                additional_info: values.additional_info || ''
+                housing_details: values.housing_details,
+                additional_info: values.additional_info
             };
-
-            console.log('📤 Submitting employee payload:', payload);
 
             try {
                 if (dialogType === 'create') {
-                    const response = await employeesApi.create(payload);
-                    console.log('✅ Employee created successfully:', response.data);
+                    await employeesApi.create(payload);
+                    console.log('✅ Employee created successfully');
                 } else {
-                    const response = await employeesApi.update(selectedEmployee.id, payload);
-                    console.log('✅ Employee updated successfully:', response.data);
+                    await employeesApi.update(selectedEmployee.id, payload);
+                    console.log('✅ Employee updated successfully');
                 }
                 await fetchEmployees();
                 resetForm();
@@ -175,14 +174,6 @@ const Employees = () => {
                 setError(errorMessage);
                 console.error('❌ Employee save error:', err);
                 console.error('❌ Error details:', err.response?.data);
-                
-                // Display specific validation errors if available
-                if (err.response?.data) {
-                    const validationErrors = Object.entries(err.response.data)
-                        .map(([field, messages]) => `${field}: ${Array.isArray(messages) ? messages.join(', ') : messages}`)
-                        .join('; ');
-                    setError(`Validation errors: ${validationErrors}`);
-                }
             } finally {
                 setSubmitting(false);
             }
